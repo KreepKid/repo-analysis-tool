@@ -246,9 +246,12 @@ def _history_with_numstat(repo_path: Path, ref: str, start_ts: int | None, end_t
         if len(parts) != 4:
             continue
         sha, parents, author, timestamp = parts
+        commit_timestamp = int(timestamp)
         if wanted and sha not in wanted:
             continue
-        commit = {"sha": sha, "short_sha": sha[:8], "parent": parents.split()[0] if parents else "", "author": author, "date": int(timestamp)}
+        if not wanted and ((start_ts is not None and commit_timestamp < start_ts) or (end_ts is not None and commit_timestamp >= end_ts)):
+            continue
+        commit = {"sha": sha, "short_sha": sha[:8], "parent": parents.split()[0] if parents else "", "author": author, "date": commit_timestamp}
         diffs: list[tuple[str, int, int]] = []
         for line in stat_lines:
             columns = line.split("\t")
