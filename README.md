@@ -24,7 +24,8 @@ No Python packages or Node dependencies are required.
 ## Run locally
 
 ```bash
-cd /home/vmuser/Documents/Qoder/2026-10-06/chat-1/rat
+git clone https://github.com/KreepKid/repo-analysis-tool
+cd repo-analysis-tool
 python3 app.py
 ```
 
