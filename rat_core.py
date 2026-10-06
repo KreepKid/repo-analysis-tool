@@ -193,7 +193,8 @@ def analyze_repository(repo: RepoRecord, ref: str = "HEAD", start_ts: int | None
             file_total = file_totals.setdefault(path, _blank_total("file", path))
             _add_change(file_total, added, removed, growth, churn)
             objects = [path, *_directories_for(path)]
-            changed_objects.update(objects)
+            if churn:
+                changed_objects.update(objects)
             for directory in objects[1:]:
                 _add_change(dir_totals.setdefault(directory, _blank_total("directory", directory)), added, removed, growth, churn)
             for object_path in objects:
